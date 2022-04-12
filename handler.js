@@ -377,20 +377,6 @@ To turn off this feature, type
     })
     this.copyNForward(m.key.remoteJid, m.message).catch(e => console.log(e, m))
   },
-  async onCall(json) {
-    let { from } = json[2][0][1]
-    let users = global.db.data.users
-    let user = users[from] || {}
-    if (user.whitelist) return
-    switch (this.callWhitelistMode) {
-      case 'mycontact':
-        if (from in this.contacts && 'short' in this.contacts[from])
-          return
-        break
-    }
-    await this.sendMessage(from, 'Sorry, because you called the bot. you are automatically blocked', MessageType.extendedText)
-    await this.blockUser(from, 'add')
-  }
 }
 
 global.dfail = (type, m, conn) => {
